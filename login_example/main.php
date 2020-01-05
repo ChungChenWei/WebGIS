@@ -32,8 +32,10 @@
 </nav>
 <div id="container" style='height: 100%;'>
   <div id="sidebar" style="display:none">
-    <div id="accordion">
-      <h3>圖層列表<button type="button" id="btn-hide" class="btn btn-xs btn-default pull-right" id="sidebar-hide-btn"><i class="fa fa-chevron-left"></i></button></h3>
+     <div id="accordion">
+      
+
+      <!-- <h3>圖層列表<button type="button" id="btn-hide" class="btn btn-xs btn-default pull-right" id="sidebar-hide-btn"><i class="fa fa-chevron-left"></i></button></h3>
       <div id="acc_layerlist">
         <h4 id="baselayerlist">基本底圖</h4>
         <h4 id="overlayerlist">套疊圖資</h4>
@@ -58,7 +60,8 @@
         <br />
         <button class='btn btn-warning' id='btn-edit'>Edit</button><br />
         <a href='javascript:void(0);' class='btn btn-info' id='btn-json'>Download GeoJSON</a>
-      </div>
+      </div> -->
+
     </div>
   </div>
   <div id="map"></div>
