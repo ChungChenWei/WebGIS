@@ -5,12 +5,12 @@ ol.proj.proj4.register(proj4);
 
 var init_lat=23.62;   //23.750815, 121.027538
 var init_lng=120.5;
-var zoom=8;
+var zoom=7;
 var user_location=null;
 var view = new ol.View({
   center: ol.proj.transform([init_lng, init_lat], 'EPSG:4326', 'EPSG:3857'),
   zoom: zoom,
-  minZoom: 8,
+  minZoom: 7,
   maxZoom: 14,
   extent: ol.proj.transformExtent([119.8, 21,122.07, 25.3], 'EPSG:4326', 'EPSG:3857')
 });
@@ -18,7 +18,7 @@ var map = new ol.Map({
   layers: [],
   target: 'map',
   view: view,
-  interactions: ol.interaction.defaults({ doubleClickZoom: false }),
+  interactions: ol.interaction.defaults({ doubleClickZoom: true }),
 });
 
 //select feature by alt+click
@@ -97,14 +97,89 @@ function loadJsonSourceWithAjax(url){
 }
 
 var layers = {
-    'OSM': { 
-        'title': 'OpenStreetMap(開放街圖)', 
-        'type': 'base', 
-        'layer': new ol.layer.Tile({ 
-            visible:false,
-            source: new ol.source.OSM()  
-            }) 
-        },
+    // 'OSM': { 
+    //     'title': 'OpenStreetMap(開放街圖)', 
+    //     'type': 'base', 
+    //     'layer': new ol.layer.Tile({ 
+    //         visible:false,
+    //         source: new ol.source.OSM()  
+    //         }) 
+    // },    
+    // 'EMAP': {
+    //     'title': '臺灣通用電子地圖(門牌)',
+    //     'type': 'base',
+    //     'layer': new ol.layer.Tile({
+    //         visible:false,
+    //         extent: projectionExtent,
+    //         source: new ol.source.WMTS({
+    //             url: 'http://maps.nlsc.gov.tw/S_Maps/wmts?',
+    //             layer: 'EMAP',
+    //             matrixSet: 'GoogleMapsCompatible',
+    //             format: 'image/jpeg',
+    //             projection: projection,
+    //             tileGrid: new ol.tilegrid.WMTS({
+    //                 origin: ol.extent.getTopLeft(projectionExtent),
+    //                 resolutions: resolutions,
+    //                 matrixIds: matrixIds
+    //             }),
+    //             extent: projectionExtent,
+    //             style: 'default'
+    //         })
+    //     })
+    // },
+    // 'metro': {
+    //     'title': '機場捷運站',
+    //     'type': 'overlay',
+    //     'layer': new ol.layer.Vector({
+    //         visible:false,
+    //         source: new ol.source.Vector({
+    //           format: new ol.format.GeoJSON(),
+    //           url: './data/metro.geojson',
+    //         })       
+    //    })
+    // },
+    // 'taipei-metro': {
+    //     'title': '台北捷運站',
+    //     'type': 'overlay',
+    //     'layer': new ol.layer.Vector({
+    //         visible:false,
+    //         source: new ol.source.Vector({
+    //           format: new ol.format.GeoJSON(),
+    //           url: './data/taipei-metro.geojson',
+    //         })
+       
+    //    })
+    // },/**/
+    // 'bike': {
+    //     'title': 'bike',
+    //     'type': 'overlay',
+    //     'layer': new ol.layer.Vector({
+    //       visible:false,
+    //       source: new ol.source.Vector({
+    //           format: new ol.format.GeoJSON(),
+    //           url: './data/bike.geojson',
+    //       })  
+    //     })
+    // },
+    // /*'bike': {
+    //     'title': 'bike',
+    //     'type': 'overlay',
+    //     'layer': new ol.layer.Vector({
+    //       visible:false,
+    //       source: loadJsonSourceWithAjax("./data/bike.geojson")
+    //     })
+    // },*/
+    // 'metroline': {
+    //     'title': '捷運線',
+    //     'type': 'overlay',
+    //     'layer': new ol.layer.Vector({
+    //         visible:false,
+    //         source: new ol.source.Vector({
+    //           format: new ol.format.GeoJSON(),
+    //           url: './data/metroline.geojson',
+    //         })
+    //     })
+    // },
     'Google Maps': { 
         'title': 'Google Maps', 
         'type': 'base', 
@@ -113,81 +188,6 @@ var layers = {
             source: new ol.source.XYZ({
                 crossOrigin: 'anonymous',
                 url: 'https://mt{0-3}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
-            })
-        })
-    },
-    'EMAP': {
-        'title': '臺灣通用電子地圖(門牌)',
-        'type': 'base',
-        'layer': new ol.layer.Tile({
-            visible:false,
-            extent: projectionExtent,
-            source: new ol.source.WMTS({
-                url: 'http://maps.nlsc.gov.tw/S_Maps/wmts?',
-                layer: 'EMAP',
-                matrixSet: 'GoogleMapsCompatible',
-                format: 'image/jpeg',
-                projection: projection,
-                tileGrid: new ol.tilegrid.WMTS({
-                    origin: ol.extent.getTopLeft(projectionExtent),
-                    resolutions: resolutions,
-                    matrixIds: matrixIds
-                }),
-                extent: projectionExtent,
-                style: 'default'
-            })
-        })
-    },
-    'metro': {
-        'title': '機場捷運站',
-        'type': 'overlay',
-        'layer': new ol.layer.Vector({
-            visible:false,
-            source: new ol.source.Vector({
-              format: new ol.format.GeoJSON(),
-              url: './data/metro.geojson',
-            })       
-       })
-    },
-    'taipei-metro': {
-        'title': '台北捷運站',
-        'type': 'overlay',
-        'layer': new ol.layer.Vector({
-            visible:false,
-            source: new ol.source.Vector({
-              format: new ol.format.GeoJSON(),
-              url: './data/taipei-metro.geojson',
-            })
-       
-       })
-    },/**/
-    'bike': {
-        'title': 'bike',
-        'type': 'overlay',
-        'layer': new ol.layer.Vector({
-          visible:false,
-          source: new ol.source.Vector({
-              format: new ol.format.GeoJSON(),
-              url: './data/bike.geojson',
-          })  
-        })
-    },
-    /*'bike': {
-        'title': 'bike',
-        'type': 'overlay',
-        'layer': new ol.layer.Vector({
-          visible:false,
-          source: loadJsonSourceWithAjax("./data/bike.geojson")
-        })
-    },*/
-    'metroline': {
-        'title': '捷運線',
-        'type': 'overlay',
-        'layer': new ol.layer.Vector({
-            visible:false,
-            source: new ol.source.Vector({
-              format: new ol.format.GeoJSON(),
-              url: './data/metroline.geojson',
             })
         })
     },
@@ -213,41 +213,41 @@ var setLayer=function(key){     //function setLayer(idx)
 }
 
 var styles = {
-    'metro': [new ol.style.Style({
-        image: new ol.style.Circle({
-            radius: 5,
-            fill: new ol.style.Fill({color: 'black'}),
-            stroke: new ol.style.Stroke({
-              color: [255,0,0], width: 2
-            })
-        })
-    })],/**/
-    'taipei-metro': [new ol.style.Style({
-        image: new ol.style.Circle({
-            radius: 5,
-            fill: new ol.style.Fill({color: 'black'}),
-            stroke: new ol.style.Stroke({
-              color: [255,0,0], width: 2
-            })
-        })
-    })],
-    /*'metro': [new ol.style.Style({
-        image: new ol.style.Icon({
-          crossOrigin: 'anonymous',
-          src:'https://maps.google.com/mapfiles/ms/icons/red-dot.png'         
-        })
-    })],*/
-    'metroline': [new ol.style.Style({
-        stroke: new ol.style.Stroke({
-            color: 'rgba(100, 100, 255, 0.9)',
-            width: 5,
-            lineDash: [4,8]   //line dash pattern [line, space]
-        })
-    })],
+    // 'metro': [new ol.style.Style({
+    //     image: new ol.style.Circle({
+    //         radius: 5,
+    //         fill: new ol.style.Fill({color: 'black'}),
+    //         stroke: new ol.style.Stroke({
+    //           color: [255,0,0], width: 2
+    //         })
+    //     })
+    // })],/**/
+    // 'taipei-metro': [new ol.style.Style({
+    //     image: new ol.style.Circle({
+    //         radius: 5,
+    //         fill: new ol.style.Fill({color: 'black'}),
+    //         stroke: new ol.style.Stroke({
+    //           color: [255,0,0], width: 2
+    //         })
+    //     })
+    // })],
+    // /*'metro': [new ol.style.Style({
+    //     image: new ol.style.Icon({
+    //       crossOrigin: 'anonymous',
+    //       src:'https://maps.google.com/mapfiles/ms/icons/red-dot.png'         
+    //     })
+    // })],*/
+    // 'metroline': [new ol.style.Style({
+    //     stroke: new ol.style.Stroke({
+    //         color: 'rgba(100, 100, 255, 0.9)',
+    //         width: 5,
+    //         lineDash: [4,8]   //line dash pattern [line, space]
+    //     })
+    // })],
     'county': [new ol.style.Style({
         stroke: new ol.style.Stroke({
             color: 'rgba(100, 100, 200, 0.7)',
-            width: 10
+            width: 2
         }),
         fill: new ol.style.Fill({
             color: 'rgba(0, 0, 255, 0.3)'
@@ -280,29 +280,105 @@ function styleFunction(stylename) {
 
 initLayers();
 
+var popup=undefined;
+map.on('singleclick', function(evt) {  //triger singleclick, get evt,
+  var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {  //get feature and layer by evt.pixel
+    return feature;
+  });
+  console.log("#####");
+  // console.log(feature.get('COUNTYNAME'));
+  console.log(typeof(feature));
+
+  if(typeof(popup)!=undefined){
+    map.removeOverlay(popup);
+  }
+  if(typeof(feature)!=undefined){
+    map.removeOverlay(popup);
+  }
+  if (feature) {
+    if(feature.get('COUNTYNAME')!=undefined){
+
+      
+
+      popup = new ol.Overlay({
+        element: $("<div />").addClass('info').append(
+          $("<h4 />").html(feature.get('COUNTYNAME'))
+        
+
+
+
+
+        // element: $("<div />").addClass('info').append(   //put a table to element parameter
+        //   $("<table />").addClass('table').append(
+        //     $("<thead />").append(
+        //       $("<tr />").append(
+        //         $("<th />").html("key")
+        //       ).append(
+        //         $("<th />").html("value")
+        //       )
+        //     )
+        //   ).append(
+        //     $("<tbody />").append(
+        //       $("<tr />").append(
+        //         $("<td />").html("縣市名稱")
+        //       ).append(
+        //         $("<td />").html(feature.get('COUNTYNAME'))
+        //       )
+        //     )
+            // ).append(
+            //   $("<tr />").append(
+            //     $("<td />").html("lat")
+            //   ).append(
+            //     $("<td />").html(feature.get('lat'))
+            //   )
+            // ).append(
+            //   $("<tr />").append(
+            //     $("<td />").html("lng")
+            //   ).append(
+            //     $("<td />").html(feature.get('lng'))
+            //   )
+            // ).append(
+            //   $("<tr />").append(
+            //     $("<td />").html("type")
+            //   ).append(
+            //     $("<td />").html(feature.get('stype'))
+            //   )
+            // )
+          // )
+        )[0]
+      });
+      popup.setPosition(evt.coordinate);
+      map.addOverlay(popup);
+    }
+  }
+});
+
 $(function() {
   //baseLayer control
   console.log(map.getView().calculateExtent(map.getSize()));
   setLayer('Google Maps');
-  $("input.basecontrol").change(function() {
-    if($(this).is(':checked'))
-      setLayer($(this).attr('value'));    
-  });
+  layers["county"].layer.setVisible(true);
+
   
-  //overlayLayer control
-  $("input.overlaycontrol").change(function() {
-    if($(this).is(':checked')){
-      layers[$(this).val()].layer.setVisible(true);
+  // $("input.basecontrol").change(function() {
+  //   if($(this).is(':checked'))
+  //     setLayer($(this).attr('value'));    
+  // });
+  
+  // //overlayLayer control
+  // $("input.overlaycontrol").change(function() {
+  //   if($(this).is(':checked')){
+  //     layers[$(this).val()].layer.setVisible(true);
       
-      console.log($(this).val());
-      if($(this).val()=='bus'){
-        layers[$(this).val()].layer.setSource(loadJsonSourceWithAjax("./data/bike.php"));
-      }
-      //
-    }
-    else
-      layers[$(this).val()].layer.setVisible(false);
-  });
+  //     console.log($(this).val());
+  //     if($(this).val()=='bus'){
+  //       layers[$(this).val()].layer.setSource(loadJsonSourceWithAjax("./data/bike.php"));
+  //     }
+  //     //
+  //   }
+  //   else
+  //     layers[$(this).val()].layer.setVisible(false);
+  // });
 
 });
 
