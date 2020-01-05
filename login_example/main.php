@@ -24,6 +24,7 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li><a id="membership" href="?member"><span class="glyphicon glyphicon-user"></span>會員資料</a></li>
         <li><a id="logout" href="?signout"><span class="glyphicon glyphicon-log-out"></span>登出</a></li>
       </ul>
     </div>

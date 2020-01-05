@@ -1,5 +1,4 @@
 <?php
-
 ######################################################################
 #
 # enable php session 
@@ -11,16 +10,35 @@
 if(php_sapi_name()!= "cli" && session_status() == PHP_SESSION_NONE) //Determine whether PHP is being run via HTTP or CLI 
   session_start();
 
+require_once(__DIR__."/sqlconnect.php");
+
 //是否已經通過登入認證
 function isAuthenticated(){
   if(isset($_GET['signout'])){  //當觸發登出時
     unset($_SESSION['authenticated']);  //解除session:authenticated
     include(__DIR__."/signout.php");
     return false;
+  }else if (isset($_GET['member'])) {
+    if(isset($_SESSION['authenticated']))
+      return true;
+    else
+      return false;
+    
   }else if(!isset($_SESSION['authenticated'])){  //當$_SESSION['authenticated']還沒設定時
     if(isset($_POST['user'])){  //當有登入動作時,進行帳號密碼判斷
-      if($_POST['user']=='test' && $_POST['pswd']=='abc@123456'){ //簡易的帳號密碼判斷,未來可更改為使用資料庫判斷
-        $_SESSION['authenticated']=true;
+      $db_database   = "fruit";
+
+      if(($conn=connectToDB())!==false){
+        $sql="SELECT * FROM ".$db_database.".`account` where `UserName` =:user  and `Password`=:pass;";
+        $prepare=$conn->prepare($sql);
+        $prepare->bindValue(':user',$_POST['user']);
+        $prepare->bindValue(':pass',md5($_POST['pswd']));
+        $prepare->execute();                            //$conn->query($sql), SQL injection
+        $result=$prepare->fetchAll();              //get all query data, it is an array.
+        if(count($result)){
+          $_SESSION['authenticated']=true;
+        }
+        $conn=null;
       }
     }
   }
