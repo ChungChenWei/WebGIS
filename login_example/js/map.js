@@ -43,6 +43,9 @@ document.addEventListener('keydown', function(evt) {  //use document to handle k
   }
 });
 
+
+
+
 //for Geolocation
 /*
 var geolocation = new ol.Geolocation({
@@ -280,78 +283,123 @@ function styleFunction(stylename) {
 
 initLayers();
 
+
+
+var cursorHoverStyle = "pointer";
+var target = map.getTarget();
+//target returned might be the DOM element or the ID of this element dependeing on how the map was initialized
+//either way get a jQuery object for it
+var jTarget = typeof target === "string" ? $("#"+target) : $(target);
+
+
 var popup=undefined;
+map.on('pointermove', function(evt) {  //triger singleclick, get evt,
+  var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {  //get feature and layer by evt.pixel
+    return feature;
+  });
+
+  if (feature) {
+
+    jTarget.css("cursor", cursorHoverStyle);
+  } else {
+    jTarget.css("cursor", "");
+  }
+});
+
 map.on('singleclick', function(evt) {  //triger singleclick, get evt,
   var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {  //get feature and layer by evt.pixel
     return feature;
   });
+
   console.log("#####");
   // console.log(feature.get('COUNTYNAME'));
   console.log(typeof(feature));
 
   if(typeof(popup)!=undefined){
+    // $("#fName").html("點選水果按鈕，查看簡介");
     map.removeOverlay(popup);
   }
   if(typeof(feature)!=undefined){
+     $("#fName").html("找到綠色的水果按鈕並點擊 (ex:<div class='btn btn-success btn-xs'>木瓜</div> )，就可以看到該水果的介紹喔！");
+     $("#fImg").attr("");
+     $("#content").html("");
     map.removeOverlay(popup);
   }
-  if (feature) {
+  if (feature){
     if(feature.get('COUNTYNAME')!=undefined){
 
-      
+      $.ajax({
+        url: 'php/countyBtn.php',
+        type: 'POST',
+        data: {"cName":feature.get('COUNTYNAME')}, // 傳回資料庫的參數(server端用post接收)
+        dataType:'text',
+        success: function(result) {
+          result = JSON.parse(result);
+          console.log(result['水果'])
+          result2 = result['水果'].split(",");
+          // var res = [];
+          for (i = 0; i < result2.length; i++) {
+             // $("<div />").append(result['水果'][i] + "<br>");
+             // res.push(result2[i]);
+             var btn = $("<button class='fruitbtn btn btn-success btn-xs'>"+result2[i]+"</button>");
+             $("#fbtn").append(btn);
+             // $("#fbtn").append(
+             //   $("<button />",{class:"fruitbtn"}).append(result2[i])
+             //   ).append("</br>")
+          }
+        },
+        error: function(){
+          console.log('ajax error');
+        }
+      });
 
       popup = new ol.Overlay({
         element: $("<div />").addClass('info').append(
-          $("<h4 />").html(feature.get('COUNTYNAME'))
-        
+          $("<h4 />").html(feature.get('COUNTYNAME')).append(
+            $("<div />", {id:"fbtn"}).html("")
+            )
 
 
-
-
-        // element: $("<div />").addClass('info').append(   //put a table to element parameter
-        //   $("<table />").addClass('table').append(
-        //     $("<thead />").append(
-        //       $("<tr />").append(
-        //         $("<th />").html("key")
-        //       ).append(
-        //         $("<th />").html("value")
-        //       )
-        //     )
-        //   ).append(
-        //     $("<tbody />").append(
-        //       $("<tr />").append(
-        //         $("<td />").html("縣市名稱")
-        //       ).append(
-        //         $("<td />").html(feature.get('COUNTYNAME'))
-        //       )
-        //     )
-            // ).append(
-            //   $("<tr />").append(
-            //     $("<td />").html("lat")
-            //   ).append(
-            //     $("<td />").html(feature.get('lat'))
-            //   )
-            // ).append(
-            //   $("<tr />").append(
-            //     $("<td />").html("lng")
-            //   ).append(
-            //     $("<td />").html(feature.get('lng'))
-            //   )
-            // ).append(
-            //   $("<tr />").append(
-            //     $("<td />").html("type")
-            //   ).append(
-            //     $("<td />").html(feature.get('stype'))
-            //   )
-            // )
-          // )
-        )[0]
+          )[0]
       });
       popup.setPosition(evt.coordinate);
       map.addOverlay(popup);
     }
   }
+
+  $("#fbtn").on("click", ".fruitbtn", function(){
+    // alert("click!!!");
+    // alert($(this).text());
+    $.ajax({
+        url: 'php/fruitDoc.php',
+        type: 'POST',
+        data: {"fName":$(this).text()},
+        dataType:'text',
+        success: function(result) {
+          result = JSON.parse(result);
+          $("#fName").html(result['fName']);
+          $("#fruitImg").attr("src",result['img_link']);
+          $("#content").html(result['content']);
+          
+        },
+        error: function(){
+          console.log('ajax error');
+        }
+      });
+  });
+
 });
+
+
+
+
+
+
+
+
+
+
+
 
 $(function() {
   //baseLayer control
@@ -359,7 +407,33 @@ $(function() {
   setLayer('Google Maps');
   layers["county"].layer.setVisible(true);
 
-  
+
+
+
+
+    // $(".fruitbtn").click(function() {
+    //   let $this = $(this);
+    //   let fName = $this.text();
+    //   console.log(fName);
+    //   $.ajax({
+    //     url: 'php/fruitDoc.php',
+    //     type: 'POST',
+    //     data: {"fName":fName},
+    //     dataType:'text',
+    //     success: function(result) {
+    //       result = JSON.parse(result);
+    //       $("#fName").html(fName);
+    //       $("#fruitImg").attr("src",result['img_link']);
+    //       $("#content").html(result['content']);
+    //     },
+    //     error: function(){
+    //       console.log('ajax error');
+    //     }
+    //   }); 
+    // });
+
+
+
   // $("input.basecontrol").change(function() {
   //   if($(this).is(':checked'))
   //     setLayer($(this).attr('value'));    

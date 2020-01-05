@@ -136,3 +136,7 @@ ul.ui-autocomplete{
 .info > .table > tbody > tr:nth-child(even){
   background: #fcf8e3;
 }
+
+.fruitbtn {
+  margin: 5px;
+}
