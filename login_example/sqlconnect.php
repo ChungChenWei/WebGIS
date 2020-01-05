@@ -1,10 +1,5 @@
 <?php
-$db_servername = NULL;     //localhost
-$db_username = NULL;
-$db_password = NULL;
-$db_database = NULL;
-$db_port = NULL; 
-function connectToDB($db_servername="db.sgis.tw",$db_username="fruit",$db_password="fruitmap",$db_database="fruit",$db_port=3306){
+function connectToDB($db_servername = "db.sgis.tw",$db_username = "fruit",$db_password = "fruitmap",$db_database = "fruit",$db_port = 3306){
   try{
     $conn = new PDO("mysql:host={$db_servername};port={$db_port};dbname={$db_database}", 
                     $db_username, 
@@ -21,5 +16,4 @@ function connectToDB($db_servername="db.sgis.tw",$db_username="fruit",$db_passwo
   }
   return $conn;
 }
-
-
+?>

@@ -1,8 +1,7 @@
 <?php
   require_once(__DIR__."/header.php");
-  require_once(__DIR__."/funs.php");
-  require_once(__DIR__."/gump.class.php");
   require_once(__DIR__."/UserVeridator.php");
+  require_once(__DIR__."/InputVeridator.php");
   require_once(__DIR__."/sqlconnect.php");
   ?>
   <div class="container">
@@ -40,55 +39,19 @@
         </div>
         <?
         if(isset($_POST['submit'])){
-          $error = NULL;
 
-          $gump = new GUMP();
-          $_POST = $gump->sanitize($_POST);
-          /*
-          echo "POST <br>";
-          foreach ($_POST as $key => $value) {
-            echo $key;
-            echo "<br>";
-            echo $value;
-            echo "<br>";
-          }*/
-
-          $validation_rules_array = array(
-            'user'    => 'required|alpha_numeric|max_len,20|min_len,1',
-            'email'   => 'required|valid_email',
-            'pswd'    => 'required|max_len,20|min_len,1',
-            'pswdcom' => 'required'
-          );
-          $gump->validation_rules($validation_rules_array);
-
-          $filter_rules_array = array(
-            'user'    => 'trim|sanitize_string',
-            'email'   => 'trim|sanitize_email',
-            'pswd'    => 'trim',
-            'pswdcom' => 'trim'
-          );
-          $gump->filter_rules($filter_rules_array);
-
-          $validated_data = $gump->run($_POST);
+          $InputVeridator = new InputVeridator();
+          $validated_data = $InputVeridator->InputCheck($_POST);
 
           if($validated_data === false) {
-            $error = $gump->get_readable_errors(false);
+            $error = $InputVeridator->getErrorArray();
             if(isset($error)){
               foreach($error as $error){
                 echo '<p class="bg-danger">'.$error.'</p>';
               }
             }
-            /*if(!empty($error)){
-              echo "ERROR <br>";
-              foreach ($error as $key => $value) {
-                echo $key;
-                echo "<br>";
-                echo $value;
-                echo "<br>";
-              }
-            }*/
           }else{ // validation successful
-            foreach($validation_rules_array as $key => $val) {
+            foreach($InputVeridator->getRuleArray() as $key => $val) {
               ${$key} = $_POST[$key];
             }
             $userVeridator = new UserVeridator();
@@ -96,22 +59,12 @@
             $userVeridator->isUsernameDuplicate($user);
             $userVeridator->isEmailDuplicate($email);
             $error = $userVeridator->getErrorArray();
+            
             if(isset($error)){
               foreach($error as $error){
                 echo '<p class="bg-danger">'.$error.'</p>';
               }
-            }
-            /*if(!empty($error)){
-              echo "ERROR <br>";
-              print_r($error,1);
-              foreach ($error as $key => $value) {
-                echo $key;
-                echo "<br>";
-                echo $value;
-                echo "<br>";
-              }
-            } */        
-            if(empty($error)){ // No error
+            }else{ // No error
               //create the random activasion code
               $activasion = md5(uniqid(rand(),true));
 
@@ -124,13 +77,11 @@
                 $prepare->bindValue(':activecode',$activasion);
                 $prepare->execute();
               }
-
               header('Location: ./index.php');
             } 
           }
         }
         ?>
-
         <div class='form-group'>
           <div class='col-md-offset-2 col-md-10'>
             <p>Already member? <a href='index.php'>Log In Here</a></p>
@@ -143,5 +94,4 @@
         padding: 6px 12px;
       }
     </style>
-<?php
-?>
+</div>
