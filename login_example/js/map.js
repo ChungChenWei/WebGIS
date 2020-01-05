@@ -160,7 +160,7 @@ var layers = {
             })
        
        })
-    },/**/
+    },
     'bike': {
         'title': 'bike',
         'type': 'overlay',
@@ -260,19 +260,20 @@ function initLayers() {
   //console.log("layers:",Object.keys(layers)[0].layer);
   for (i = 0; i < Object.keys(layers).length; i++) {
     var tlayer = layers[Object.keys(layers)[i]];
+    
     if (tlayer.type == 'base') {
-      $('<div class="radio"><label><input type="radio" class="basecontrol" name="baselayer" id=' + Object.keys(layers)[i] + ' value="' + Object.keys(layers)[i] +'"'+ (i==2?' checked':'')   +' >' + tlayer.title + '</label></div>').appendTo("#baselayerlist");
+      //$('<div class="radio"><label><input type="radio" class="basecontrol" name="baselayer" id=' + Object.keys(layers)[i] + ' value="' + Object.keys(layers)[i] +'"'+ (i==1?' checked':'')   +' >' + tlayer.title + '</label></div>').appendTo("#baselayerlist");
       //console.log(layers[Object.keys(layers)[i]].title);
       map.addLayer(tlayer.layer);           
     }else if(tlayer.type == 'overlay') {
-      $('<div class="checkbox"><label><input type="checkbox" class="overlaycontrol" name="overlayer" value="' + Object.keys(layers)[i] + '">' + tlayer.title + '</label></div>').appendTo("#overlayerlist");
+      //$('<div class="checkbox"><label><input type="checkbox" class="overlaycontrol" name="overlayer" value="' + Object.keys(layers)[i] + '">' + tlayer.title + '</label></div>').appendTo("#overlayerlist");
       map.addLayer(tlayer.layer);
       tlayer.layer.setZIndex(10000-i);
       tlayer.layer.setStyle(styleFunction(Object.keys(layers)[i]));
     }
   }
- 
 }
+
 
 function styleFunction(stylename) {
   return styles[stylename];

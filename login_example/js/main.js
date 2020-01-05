@@ -1,9 +1,9 @@
 $(function() {
-  $("#nav_layerlist").click(function() {
+  /*$("#nav_layerlist").click(function() {
       $("#sidebar").toggle();
       $("#accordion").accordion("option", { active: 0 });
       updateSize();
-  });
+  });*/
   $("#btn-hide").click(function() {
       $("#sidebar").hide();
       updateSize();

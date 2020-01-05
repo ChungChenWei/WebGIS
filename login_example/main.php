@@ -24,40 +24,34 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">測試縣市<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><button class="fruitbtn">梅子</button></li>
+                <li><button class="fruitbtn">西瓜</button></li>
+            </ul>
+        </li>
         <li><a id="membership" href="?member"><span class="glyphicon glyphicon-user"></span>會員資料</a></li>
         <li><a id="logout" href="?signout"><span class="glyphicon glyphicon-log-out"></span>登出</a></li>
       </ul>
     </div>
   </div>
 </nav>
+<script src="./js/fruitDoc.js"></script>
 <div id="container" style='height: 100%;'>
-  <div id="sidebar" style="display:none">
+  <div id="sidebar">
     <div id="accordion">
-      <h3>圖層列表<button type="button" id="btn-hide" class="btn btn-xs btn-default pull-right" id="sidebar-hide-btn"><i class="fa fa-chevron-left"></i></button></h3>
+      <h3>水果介紹<button type="button" id="btn-hide" class="btn btn-xs btn-default pull-right" id="sidebar-hide-btn"><i class="fa fa-chevron-left"></i></button></h3>
       <div id="acc_layerlist">
-        <h4 id="baselayerlist">基本底圖</h4>
-        <h4 id="overlayerlist">套疊圖資</h4>
-      </div>
-      <h3>資料查詢</h3>
-      <div id="query_data">
-        <div role="form">
-          <div class="form-group">
-            <label for="tid" class="text-inline">
-                請輸入文字
-            </label>
-            <input type="text" id="tid" class="form-control" name="tid"/>
-            <span></span>
-          </div>
+        <h4 id='fName'></h4>
+        <div id="fImg">
+            <img id="fruitImg" style="width:100%">
         </div>
-      </div>
-      <h3>繪圖</h3>
-      <div id="draw_data">
-        <button class='btn btn-info btn-draw' id='btn-line' drawType='Point'>Point</button>
-        <button class='btn btn-info btn-draw' id='btn-line' drawType='LineString'>LineString</button>
-        <button class='btn btn-info btn-draw' id='btn-line' drawType='Polygon'>Polygon</button>
-        <br />
-        <button class='btn btn-warning' id='btn-edit'>Edit</button><br />
-        <a href='javascript:void(0);' class='btn btn-info' id='btn-json'>Download GeoJSON</a>
+        <div id="content"></div>
+        <!--
+        <h4 id="baselayerlist">底</h4>
+        <h4 id="overlayerlist">浮</h4>
+        !-->
       </div>
     </div>
   </div>
