@@ -55,12 +55,12 @@
 
             <h3>Intro<button type="button" id="btn-hide" class="btn btn-xs btn-default pull-right" id="sidebar-hide-btn"><i class="fa fa-chevron-left"></i></button></h3>
             <div id="acc_layerlist1">
-              <div>「果來一點好嗎！」是一個結合地圖跟臺灣水果相關資訊的網站。</div>
+              <div style="margin-top:20px;">「果來一點好嗎！」是一個結合地圖跟臺灣水果相關資訊的網站。</div>
             </div>
       
             <h3>水果介紹</h3>
             <div id="acc_layerlist">
-              <h4 id='fName'>找到綠色的水果按鈕並點擊 (ex:<div class='btn btn-success btn-xs'>木瓜</div> )，就可以看到該水果的介紹喔！</h4>
+              <div id='fName' style="margin:20px 0px 10px 0px;">找到綠色的水果按鈕並點擊 (ex:<div class='btn btn-success btn-xs'>木瓜</div> )，就可以看到該水果的介紹喔！</div>
               <div id="fImg">
                   <img id="fruitImg" style="width:100%">
               </div>

@@ -311,7 +311,7 @@ map.on('singleclick', function(evt) {  //triger singleclick, get evt,
     return feature;
   });
 
-  console.log("#####");
+  // console.log("#####");
   // console.log(feature.get('COUNTYNAME'));
   console.log(typeof(feature));
 
@@ -321,7 +321,7 @@ map.on('singleclick', function(evt) {  //triger singleclick, get evt,
   }
   if(typeof(feature)!=undefined){
      $("#fName").html("找到綠色的水果按鈕並點擊 (ex:<div class='btn btn-success btn-xs'>木瓜</div> )，就可以看到該水果的介紹喔！");
-     $("#fImg").attr("");
+     $("#fruitImg").attr("src","");
      $("#content").html("");
     map.removeOverlay(popup);
   }
@@ -377,7 +377,7 @@ map.on('singleclick', function(evt) {  //triger singleclick, get evt,
         dataType:'text',
         success: function(result) {
           result = JSON.parse(result);
-          $("#fName").html(result['fName']);
+          $("#fName").html("<b>"+result['fName']+"</b>");
           $("#fruitImg").attr("src",result['img_link']);
           $("#content").html(result['content']);
           
