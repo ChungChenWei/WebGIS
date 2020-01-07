@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src='monthlygraf.js'></script>
+    <script src='yearlygraf.js'></script>
+</head>
+<body>
+    <!-- These divs get manipulated by D3 -->
+    <p>By Month:</p>
+    <div id="monthly"></div>
+    <p>Over Time</p>
+    <div id="overtime"></div>
+    <!-- This is a basic selector called thorugh jquery -->
+    <select id='fselect' name="fruit" size="5">
+        <option value="葡萄柚">葡萄柚</option>
+        <option value="木瓜">木瓜</option>
+        <option value="葡萄">葡萄</option>
+        <option value="芒果">芒果</option>
+        <option value="蓮霧">蓮霧</option>
+        <option value="酪梨">酪梨</option>
+        <option value="西瓜">西瓜</option>
+        <option value="椪柑">椪柑</option>
+        <option value="椰子">椰子</option>
+        <option value="鳳梨">鳳梨</option>
+        <option value="番石榴">番石榴</option>
+        <option value="香蕉">香蕉</option>
+    </select>
+    <button id="getprice"> Get Fruit Prices </button>
+    <!-- $("#txtBox").val()  -->
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" 
+    crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+</body>
