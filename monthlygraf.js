@@ -73,7 +73,7 @@ function yearlyprice(){
         .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
 
-            d3.csv("fruit_bymonth_test.csv",
+            d3.csv("fruit_bymonth.csv",
     function(d){
         return { month : d3.timeParse("%Y%m")(d.monday), value : d[fruitname]}
     },
