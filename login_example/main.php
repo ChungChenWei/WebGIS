@@ -110,6 +110,10 @@
                   <img id="fruitImg" style="width:100%">
               </div>
               <div id="content"></div>
+              <h3>By Month:</h3>
+              <div id="monthly"></div>
+              <h3>Past five years:</h3>
+              <div id="overtime"></div>
             </div>
 
             <h3>圖層列表</h3>
@@ -132,6 +136,8 @@
   </div>
   <div id="map"></div>
 </div>
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src='./js/monthlygraf.js'></script>
 <script src="./js/fruitDoc.js"></script>
 <!-- <script src="./js/countyBtn.js"></script> -->
 <script src="./js/map.js"></script>         <!-- include map.js here because it must appear after <div id="map"> -->
