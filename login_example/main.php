@@ -1,5 +1,17 @@
 <?php
   require_once(__DIR__."/funs.php");
+  $status = isAuthenticated();
+  if($status==1){
+    $log_id = "logout";
+    $log_ch = "登出";
+    $log_ico = "glyphicon-log-out";
+    $log_sig = "?signout";
+  }else{
+    $log_id = "login";
+    $log_ch = "登入";
+    $log_ico = "glyphicon-log-in";
+    $log_sig = "?signin";
+  }
 ?><nav class="nav">
   <div class="container-fluid navbar-inverse"  style="background-image: linear-gradient(to right, #C6FFDD, #FBD786, #FFB5B5);color:black;border-radius:10px;border:1px black solid;">
     <div class="navbar-header">
@@ -22,7 +34,9 @@
         <li><a data-toggle="tab" href="#layerlist" id="nav_layerlist" style="font-size:17px;font-weight:bold">蔬果價格查詢📈</a></li>
       <ul class="nav navbar-nav navbar-right">
         <li><a id="membership" href="?member" style="font-weight:bold"><span class="glyphicon glyphicon-user"></span>會員資料</a></li>
-        <li><a id="logout" href="?signout" style="font-weight:bold"><span class="glyphicon glyphicon-log-out"></span>登出</a></li>
+        <li><a id="<?echo $log_id ?>" href="<?echo $log_sig ?>" style="font-weight:bold"><span class="glyphicon <?echo $log_ico ?>">
+          </span><?echo $log_ch ?></a>
+        </li>
       </ul>
       <div class="collapse" id="introduction" >
         <div class="bg-dark p-4" >

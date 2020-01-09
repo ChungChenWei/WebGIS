@@ -9,12 +9,14 @@ function isAuthenticated(){
   if(isset($_GET['signout'])){  //當觸發登出時
     unset($_SESSION['authenticated']);  //解除session:authenticated
     include(__DIR__."/signout.php");
-    return false;
+    return 3;
+  }else if(isset($_GET['signin'])){
+    return 2;
   }else if (isset($_GET['member'])) {
     if(isset($_SESSION['authenticated']))
-      return true;
+      return 1;
     else
-      return false;
+      return 0;
   }else if(!isset($_SESSION['authenticated'])){  //當$_SESSION['authenticated']還沒設定時
     if(isset($_POST['user'])){  //當有登入動作時,進行帳號密碼判斷
       $db_database   = "fruit";
@@ -33,7 +35,7 @@ function isAuthenticated(){
     }
   }
   if(isset($_SESSION['authenticated']))
-    return true;
+    return 1;
   else
-    return false; //回傳false,讓後面的程式知道還沒有通過登入認證
+    return 0; //回傳false,讓後面的程式知道還沒有通過登入認證
 }

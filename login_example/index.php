@@ -21,10 +21,27 @@
   <body>
     <div id="container">
       <?php
+        $mode = isAuthenticated();
+        //echo $mode;
+        switch($mode){
+          case 0:
+            include(__DIR__."/main.php");
+            break; 
+          case 1:
+            include(__DIR__."/main.php");
+            break;
+          //case 1:
+          case 2:
+            include(__DIR__."/authenticate.php");
+            break;
+        }
+
+        /*
         if(isAuthenticated())
           include(__DIR__."/main.php");
         else
           include(__DIR__."/authenticate.php");
+        */
       ?>
     </div>
   </body>
