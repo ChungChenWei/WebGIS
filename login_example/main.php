@@ -85,9 +85,9 @@
                   <img id="fruitImg" style="width:100%">
               </div>
               <div id="content"></div>
-              <h3>By Month:</h3>
+              <h3>以月份</h3>
               <div id="monthly"></div>
-              <h3>Past five years:</h3>
+              <h3>過去五年</h3>
               <div id="overtime"></div>
             </div>
     </div>
