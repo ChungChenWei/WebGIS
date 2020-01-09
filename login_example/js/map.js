@@ -280,29 +280,139 @@ var styles = {
         })
     })],
     'charities': [new ol.style.Style({
-      image: new ol.style.Circle({
-          radius: 5,
-          fill: new ol.style.Fill({color: 'rgba(255,0,0, 0.3)'}),
-          stroke: new ol.style.Stroke({
-            color: [255,0,0], width: 2
-          })
-      })
+      // image: new ol.style.Circle({
+      //     radius: 5,
+      //     fill: new ol.style.Fill({color: 'rgba(255,0,0, 0.3)'}),
+      //     stroke: new ol.style.Stroke({
+      //       color: [255,0,0], width: 2
+      //     })
+      // })
+      image: new ol.style.Icon(({
+            anchor: [0.5, 1],
+            src: "http://cdn.mapmarker.io/api/v1/font-awesome/v5/pin?icon=fa-utensils&size=30&hoffset=0&voffset=-1&background=ff6600"
+        }))
+
+
     })],
 
     'greengrocers': [new ol.style.Style({
-      image: new ol.style.Circle({
-          radius: 5,
-          fill: new ol.style.Fill({color: 'rgba(92,184,92, 0.3)'}),
-          stroke: new ol.style.Stroke({
-            color: [92,184,92], width: 2
-          })
-      })
+      // image: new ol.style.Circle({
+      //     radius: 5,
+      //     fill: new ol.style.Fill({color: 'rgba(92,184,92, 0.3)'}),
+      //     stroke: new ol.style.Stroke({
+      //       color: [92,184,92], width: 2
+      //     })
+      // })
+      image: new ol.style.Icon(({
+            anchor: [0.5, 1],
+            // src: "http://cdn.mapmarker.io/api/v1/font-awesome/v5/pin?icon=fa-seedling&size=30&hoffset=0&voffset=-1&background=5CB85C"
+            src: "http://cdn.mapmarker.io/api/v1/font-awesome/v5/pin?icon=fa-store&size=30&hoffset=0&voffset=-1&background=3385ff"
+        }))
     })]
     // 'greengrocers': [new ol.style.Icon({
     //   crossOrigin:'anonymous',
     //   src:'/fruitstand.png'
     // })]
 };
+
+
+
+
+
+// var markers = [ 
+//   // $.ajax 
+// ]
+var lat = [];
+var lng = [];
+var description = [];
+$.ajax({
+        url: 'php/fruitFarm.php',
+        type: 'POST',
+        // data: {"lat":lat,"lng":lng},
+        dataType:'text',
+        async: false,
+        success: function(result) {
+
+          result = JSON.parse(result);
+          // $("#fName").html(fName);
+          // $("#fruitImg").attr("src",result['img_link']);
+          // $("#content").html(result['content']);
+          // console.log(result);
+          
+          for(i=0; i<result.length; i++){
+              lat.push(Number(result[i]["lat"]));
+              lng.push(Number(result[i]["lng"]));
+              description.push(result[i]["農場名稱"]);
+          }
+          // console.log(lat);
+        },
+        error: function(){
+          console.log('ajax error');
+        }
+      }); 
+
+
+console.log(lat);
+
+
+
+
+
+
+var features = [];
+for (var i = 0; i < lng.length; i++) {
+    // console.log(lat[i]);
+    // console.log(lng[i]);
+
+    // var item = Markers[i];
+    // var longitude = item.lng;
+    // var latitude = item.lat;
+
+    var iconFeature = new ol.Feature({
+        geometry: new ol.geom.Point(ol.proj.transform([lng[i], lat[i]], 'EPSG:4326', 'EPSG:3857')),
+        name : description[i]
+        // geometry: new ol.geom.Point(lng[i],lat[i])
+
+    });
+
+    console.log(iconFeature);
+
+    var iconStyle = new ol.style.Style({
+        image: new ol.style.Icon(({
+            anchor: [0.5, 1],
+            // src: "http://cdn.mapmarker.io/api/v1/pin?text=F&size=30&hoffset=1"
+            src: "http://cdn.mapmarker.io/api/v1/font-awesome/v5/pin?icon=fa-seedling&size=30&hoffset=0&voffset=-1&background=5CB85C"
+            // src: "http://cdn.mapmarker.io/api/v1/font-awesome/v5/pin?icon=fa-apple-alt&size=30&hoffset=0&voffset=-1&background=3385ff"
+
+        }))
+    });
+
+    // console.log(iconFeature);
+    iconFeature.setStyle(iconStyle);
+    features.push(iconFeature);
+
+}
+// console.log(features);
+var vectorSource = new ol.source.Vector({
+    features: features
+});
+
+var vectorLayer = new ol.layer.Vector({
+    visible: false,
+    source: vectorSource
+});
+vectorLayer.setZIndex(20);
+
+layers['fruitFarm'] = {'title': '觀光水果農場', 'type': 'overlay', 'layer':vectorLayer}
+// layers.apeend(vectorLayer);
+// map.addLayer(vectorLayer);
+
+
+
+
+
+
+
 //file:///home/mjw/NTU/WebGIS/finalproject/fruitstand.png
 function initLayers() {
   //console.log("layers:",layers[Object.keys(layers)[0]].layer);
@@ -468,9 +578,11 @@ map.on('singleclick', function(evt) {  //triger singleclick, get evt,
         dataType:'text',
         success: function(result) {
           result = JSON.parse(result);
-          $("#fName").html("<b>"+result['fName']+"</b>");
+          $("#fName").html("<h3>"+result['fName']+"</h3>");
           $("#fruitImg").attr("src",result['img_link']);
           $("#content").html(result['content']);
+          $("#1yr").html("過去1年價格走勢");
+          $("#5yr").html("過去5年價格走勢");
           monthlyprice(result["fName"])
           yearlyprice(result['fName'])
           $("#accordion").accordion("option", "active", 1);
@@ -487,53 +599,7 @@ map.on('singleclick', function(evt) {  //triger singleclick, get evt,
 
 
 
-// var markers = [ 
-//   // $.ajax 
-// ]
 
-$.ajax({
-        url: 'php/fruitFarm.php',
-        type: 'POST',
-        // data: {"fName":fName, ""},
-        dataType:'text',
-        success: function(result) {
-          result = JSON.parse(result);
-          // $("#fName").html(fName);
-          // $("#fruitImg").attr("src",result['img_link']);
-          // $("#content").html(result['content']);
-          console.log(result);
-        },
-        error: function(){
-          console.log('ajax error');
-        }
-      }); 
-
-
-
-
-
-
-
-// for (var i = 0; i < Markers.length; i++) {
-//     var item = Markers[i];
-//     var longitude = item.lng;
-//     var latitude = item.lat;
-
-//     var iconFeature = new ol.Feature({
-//         geometry: new ol.geom.Point(ol.proj.transform([longitude, latitude], 'EPSG:4326', 'EPSG:3857'))
-//     });
-
-//     var iconStyle = new ol.style.Style({
-//         image: new ol.style.Icon(({
-//             anchor: [0.5, 1],
-//             src: "http://cdn.mapmarker.io/api/v1/pin?text=P&size=50&hoffset=1"
-//         }))
-//     });
-
-//     iconFeature.setStyle(iconStyle);
-//     features.push(iconFeature);
-
-// }
 
 
 
@@ -551,10 +617,17 @@ $(function() {
   console.log(map.getView().calculateExtent(map.getSize()));
   setLayer('Google Maps');
   // layers["county"].layer.setVisible(true);
+
+  console.log(typeof(layers['county']));
    layers["county"].layer.setZIndex(10);
   layers["charities"].layer.setZIndex(20);
   layers["greengrocers"].layer.setZIndex(30);
 
+
+  // console.log(layers["charities"][0]);
+
+
+  // map.addLayer(vectorLayer);
 
 
 
@@ -592,10 +665,10 @@ $(function() {
     if($(this).is(':checked')){
       layers[$(this).val()].layer.setVisible(true);
       
-      console.log($(this).val());
-      if($(this).val()=='bus'){
-        layers[$(this).val()].layer.setSource(loadJsonSourceWithAjax("./data/bike.php"));
-      }
+      // console.log($(this).val());
+      // if($(this).val()=='bus'){
+      //   layers[$(this).val()].layer.setSource(loadJsonSourceWithAjax("./data/bike.php"));
+      // }
       //
     }
     else

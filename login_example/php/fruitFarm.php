@@ -13,7 +13,7 @@ if(($conn=connectToDB())!==false){
     $prepare->execute();
     $result=$prepare->fetchAll();
     $conn=null;
-    $json_string=json_encode($result[0],384);
+    $json_string=json_encode($result,384);
     echo $json_string;
   }else{
     echo "{$tableName} not exists !!\n";

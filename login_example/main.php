@@ -25,16 +25,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#home" data-toggle="tab" style="font-size:20px;color:#030D68;">果來一點好嗎🍓<p style="font-size:10px;display: inline;">臺灣水果地圖</p></a>
+      <a class="navbar-brand" href="" data-toggle="tab" style="font-size:20px;color:#030D68;">果來一點好嗎🍓<p style="font-size:10px;display: inline;">臺灣水果地圖</p></a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#layerlist" id="nav_layerlist" style="font-size:17px;font-weight:bold">圖層列表📂</a></li>
+        <li class="active"><a data-toggle="tab" href="#layerlist" id="nav_layerlist" style="color:black;background-color:transparent ;font-size:17px;font-weight:bold">圖層列表📂</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a id="membership" href="?member" style="font-weight:bold"><span class="glyphicon glyphicon-user"></span>會員資料</a></li>
         <li><a id="<?echo $log_id ?>" href="<?echo $log_sig ?>" style="font-weight:bold"><span class="glyphicon <?echo $log_ico ?>">
-          </span><?echo $log_ch ?></a>
+          </span> &nbsp;<?echo $log_ch ?></a>
         </li>
       </ul>
       <div class="collapse" id="introduction" >
@@ -62,13 +62,16 @@
             <h3>水果介紹</h3>
             <div id="acc_layerlist">
               <div id='fName' style="margin:20px 0px 10px 0px;">找到綠色的水果按鈕並點擊 (ex:<div class='btn btn-success btn-xs'>木瓜</div> )，就可以看到該水果的介紹喔！</div>
+              <hr/>
               <div id="fImg">
                   <img id="fruitImg" style="width:100%">
               </div>
+              <hr/>
               <div id="content"></div>
-              <h3>By Month:</h3>
+              <!-- <hr/> -->
+              <h3 id="1yr"></h3>
               <div id="monthly"></div>
-              <h3>Past five years:</h3>
+              <h3 id="5yr"></h3>
               <div id="overtime"></div>
             </div>
 
