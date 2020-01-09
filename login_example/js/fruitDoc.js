@@ -18,5 +18,6 @@ $(function() {
         console.log('ajax error');
       }
     }); 
+    
   });
 });

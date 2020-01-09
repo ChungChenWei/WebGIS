@@ -403,6 +403,5 @@
 </div>
 <script src="https://d3js.org/d3.v4.js"></script>
 <script src='./js/monthlygraf.js'></script>
-<script src="./js/fruitDoc.js"></script>
 <script src="./js/map.js"></script>
 <script src="./js/main.js"></script>
