@@ -581,7 +581,7 @@ map.on('singleclick', function(evt) {  //triger singleclick, get evt,
           $("#fName").html("<h3>"+result['fName']+"</h3>");
           $("#fruitImg").attr("src",result['img_link']);
           $("#content").html(result['content']);
-          $("#1yr").html("過去1年價格走勢");
+          $("#1yr").html("每月平均水果價格");
           $("#5yr").html("過去5年價格走勢");
           monthlyprice(result["fName"])
           yearlyprice(result['fName'])
