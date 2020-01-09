@@ -1,6 +1,9 @@
 function monthlyprice(fruitname){
     $("#monthly").empty();
-    // fruitname = $("#fselect").val();
+    var flist = ['柳丁', '桃子', '芒果', '枇杷', '李子', '藍莓', '奇異果', '香蕉', '紅龍果', '文旦柚', '火龍果', '檸檬', '柿子', '百香果', '木瓜', '草莓', '柚子', '芭樂', '西瓜', '黃金果', '桑椹', '哈密瓜', '香瓜', '梅子', '金棗', '柑橘', '龍眼', '洛神', '荔枝', '酪梨', '蜜棗', '梨子', '葡萄', '釋迦', '鳳梨', '金桔', '番茄', '蓮霧', '無花果']
+    if (!flist.includes(fruitname)){
+        alert("adsjklhasdlkjhfaskljdg");
+    };
     var margin = {top: 10, right: 30, bottom: 30, left: 60},
         width = 340 - margin.left - margin.right,
         height = 250 - margin.top - margin.bottom;
@@ -38,7 +41,7 @@ function monthlyprice(fruitname){
         .attr("x",0 - (height / 2))
         .attr("dy", "1em")
         .style("text-anchor", "middle")
-        .text("Price (NT$)"); 
+        .text("Price / KG (NT$)"); 
     
         svg.append("text")             
             .attr("transform",
@@ -49,7 +52,7 @@ function monthlyprice(fruitname){
         svg.append("path")
         .datum(data)
         .attr("fill", "none")
-        .attr("stroke", "black")
+        .attr("stroke", "#1B4538")
         .attr("stroke-width", 3.5)
         .attr("d", d3.line()
             .x(function(d) { return x(d.month) })
@@ -101,7 +104,7 @@ function yearlyprice(fruitname){
         .attr("x",0 - (height / 2))
         .attr("dy", "1em")
         .style("text-anchor", "middle")
-        .text("Price (NT$)"); 
+        .text("Price / KG (NT$)"); 
     
         svg.append("text")             
             .attr("transform",
@@ -112,7 +115,7 @@ function yearlyprice(fruitname){
         svg.append("path")
         .datum(data)
         .attr("fill", "none")
-        .attr("stroke", "black")
+        .attr("stroke", "#1B4538")
         .attr("stroke-width", 3.5)
         .attr("d", d3.line()
             .x(function(d) { return x(d.month) })
@@ -120,10 +123,3 @@ function yearlyprice(fruitname){
             )
     })
 }
-
-// $(document).ready(function(){
-//     $("button#fbtn").click(function(){
-//         monthlyprice();
-//         yearlyprice();
-//     });
-// });
