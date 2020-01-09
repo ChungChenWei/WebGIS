@@ -72,7 +72,7 @@
                 $sql="insert into `fruit`.`account` (`SID`,`UserName`,`Password`,`Email`,`ActiveCode`,`Active`) VALUES (NULL,:name,:pswd,:email,:activecode,0);";
                 $prepare=$conn->prepare($sql);
                 $prepare->bindValue(':name',$user);
-                $prepare->bindValue(':pswd',md5($pswd));
+                $prepare->bindValue(':pswd',hash('sha512', $pswd));
                 $prepare->bindValue(':email',$email);
                 $prepare->bindValue(':activecode',$activasion);
                 $prepare->execute();

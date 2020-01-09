@@ -24,11 +24,13 @@ function isAuthenticated(){
         $sql="SELECT * FROM ".$db_database.".`account` where `UserName` =:user  and `Password`=:pass;";
         $prepare=$conn->prepare($sql);
         $prepare->bindValue(':user',$_POST['user']);
-        $prepare->bindValue(':pass',md5($_POST['pswd']));
+        $prepare->bindValue(':pass',hash('sha512', $_POST['pswd']));
         $prepare->execute();
         $result=$prepare->fetchAll();
         if(count($result)){
           $_SESSION['authenticated']=true;
+        }else{
+          return 4;
         }
         $conn=null;
       }
