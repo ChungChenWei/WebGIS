@@ -6,35 +6,35 @@
   ?>
   <div class="container">
     <div class=''>
-      <h2>Sign Up</h2>
+      <h2>帳號註冊</h2>
       <form class='form-horizontal' method="post" action="" autocomplete="off">
         <div class='form-group'>
-          <label for='user' class='col-md-2 control-label'>Account ID</label>
+          <label for='user' class='col-md-2 control-label'>帳號</label>
           <div class='col-md-10'>
-            <input type='text' class='form-control input-lg' id='user' name='user' placeholder='Account ID' autocomplete='false' value="<?php if(isset($error)){ echo htmlspecialchars($_POST['username'], ENT_QUOTES); } ?>" />
+            <input type='text' class='form-control input-lg' id='user' name='user' placeholder='輸入帳號' autocomplete='false' value="<?php if(isset($error)){ echo htmlspecialchars($_POST['username'], ENT_QUOTES); } ?>" />
           </div>
         </div>
         <div class="form-group">
-          <label for='user' class='col-md-2 control-label'>Email</label>
+          <label for='user' class='col-md-2 control-label'>信箱</label>
           <div class='col-md-10'>
-          <input type="email" class="form-control input-lg" id="email" name="email" placeholder="Email Address" autocomplete='false' value="<?php if(isset($error)){ echo htmlspecialchars($_POST['email'], ENT_QUOTES); } ?>" />
+          <input type="email" class="form-control input-lg" id="email" name="email" placeholder="輸入電子郵件" autocomplete='false' value="<?php if(isset($error)){ echo htmlspecialchars($_POST['email'], ENT_QUOTES); } ?>" />
           </div>
         </div>
         <div class="form-group">
-          <label for='pswd' class='col-md-2 control-label'>Password</label>
+          <label for='pswd' class='col-md-2 control-label'>密碼</label>
           <div class='col-md-10'>
-            <input type='password' class='form-control input-lg' id='pswd' name='pswd' placeholder='Enter your password' autocomplete='false'>
+            <input type='password' class='form-control input-lg' id='pswd' name='pswd' placeholder='輸入密碼' autocomplete='false'>
           </div>
         </div>
         <div class="form-group">
-          <label for='pswdcom' class='col-md-2 control-label'>Confirm Password</label>
+          <label for='pswdcom' class='col-md-2 control-label'>再次輸入密碼</label>
           <div class='col-md-10'>
-            <input type="password" class="form-control input-lg" id="pswdcom" name="pswdcom" placeholder="Confirm Password" autocomplete='false'>
+            <input type="password" class="form-control input-lg" id="pswdcom" name="pswdcom" placeholder="再次確認密碼" autocomplete='false'>
           </div>
         </div>
         <div class='form-group'>
           <div class='col-md-offset-2 col-md-10'>
-            <button type='submit' name='submit' class='btn btn-primary' id='signupBtn'>Sign up</button>
+            <button type='submit' name='submit' class='btn btn-primary' id='signupBtn'>註冊</button>
           </div>
         </div>
         <?
@@ -84,7 +84,7 @@
         ?>
         <div class='form-group'>
           <div class='col-md-offset-2 col-md-10'>
-            <p>Already member? <a href='../../index.php?signin'>Log In Here</a></p>
+            <p>已經有帳號? <a href='../../index.php?signin'>登入</a></p>
           </div>
         </div>
       </form>
