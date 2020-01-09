@@ -288,7 +288,6 @@ var styles = {
           })
       })
     })],
-
     'greengrocers': [new ol.style.Style({
       image: new ol.style.Circle({
           radius: 3,
@@ -297,13 +296,18 @@ var styles = {
             color: [80,255,120], width: 1
           })
       })
-    })]
-    // 'greengrocers': [new ol.style.Icon({
-    //   crossOrigin:'anonymous',
-    //   src:'/fruitstand.png'
-    // })]
+    })],
+  // 'greengrocers': [new ol.style.Style({
+  //   stroke: new ol.style.Stroke({
+  //       color: 'rgba(50, 255, 50, 0.7)',
+  //       width: 2
+  //   }),
+  //   fill: new ol.style.Fill({
+  //       color: 'rgba(0, 255, 0, 0.3)'
+  //   })
+  // })]
 };
-//file:///home/mjw/NTU/WebGIS/finalproject/fruitstand.png
+
 function initLayers() {
   //console.log("layers:",layers[Object.keys(layers)[0]].layer);
   //console.log("layers:",Object.keys(layers)[0].layer);

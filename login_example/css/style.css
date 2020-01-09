@@ -117,7 +117,8 @@ ul.ui-autocomplete{
 .info{
   background: #FFF;
   color: #000;
-  border: 1px solid;
+  border: 1px solid #666;
+  border-radius: 10px;
   padding: 5px;
 }
 .info > .table{
@@ -135,4 +136,8 @@ ul.ui-autocomplete{
 }
 .info > .table > tbody > tr:nth-child(even){
   background: #fcf8e3;
+}
+
+.fruitbtn {
+  margin: 5px;
 }
