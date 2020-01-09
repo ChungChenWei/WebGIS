@@ -187,7 +187,7 @@ var layers = {
         'title': 'Google Maps', 
         'type': 'base', 
         'layer': new ol.layer.Tile({ 
-            visible:false,
+            visible:true,
             source: new ol.source.XYZ({
                 crossOrigin: 'anonymous',
                 url: 'https://mt{0-3}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
@@ -198,7 +198,7 @@ var layers = {
         'title': '縣市範圍',
         'type': 'overlay',
         'layer': new ol.layer.Vector({
-            visible:false,
+            visible:true,
             source: new ol.source.Vector({
                 format: new ol.format.GeoJSON(),
                 url: './data/county.geojson',
@@ -209,7 +209,7 @@ var layers = {
       'title': '食物銀行',
       'type': 'overlay',
       'layer': new ol.layer.Vector({
-          visible:true,
+          visible:false,
           source: new ol.source.Vector({
               format: new ol.format.GeoJSON(),
               url: './data/charities.geojson',
@@ -220,7 +220,7 @@ var layers = {
     'title': '水果店',
     'type': 'overlay',
     'layer': new ol.layer.Vector({
-        visible:true,
+        visible:false,
         source: new ol.source.Vector({
             format: new ol.format.GeoJSON(),
             url: './data/ggrocers_fixed.geojson',
@@ -276,25 +276,25 @@ var styles = {
             width: 2
         }),
         fill: new ol.style.Fill({
-            color: 'rgba(0, 0, 255, 0.3)'
+            color: 'rgba(0, 0, 0, 0.05)'
         })
     })],
     'charities': [new ol.style.Style({
       image: new ol.style.Circle({
-          radius: 3,
-          fill: new ol.style.Fill({color: 'rgba(80,100,255, 0.3)'}),
+          radius: 5,
+          fill: new ol.style.Fill({color: 'rgba(255,0,0, 0.3)'}),
           stroke: new ol.style.Stroke({
-            color: [255,0,0], width: 1
+            color: [255,0,0], width: 2
           })
       })
     })],
 
     'greengrocers': [new ol.style.Style({
       image: new ol.style.Circle({
-          radius: 3,
-          fill: new ol.style.Fill({color: 'rgba(80,255,120, 0.3)'}),
+          radius: 5,
+          fill: new ol.style.Fill({color: 'rgba(92,184,92, 0.3)'}),
           stroke: new ol.style.Stroke({
-            color: [80,255,120], width: 1
+            color: [92,184,92], width: 2
           })
       })
     })]
@@ -309,16 +309,24 @@ function initLayers() {
   //console.log("layers:",Object.keys(layers)[0].layer);
   for (i = 0; i < Object.keys(layers).length; i++) {
     var tlayer = layers[Object.keys(layers)[i]];
-    if (tlayer.type == 'base') {
-      $('<div class="radio"><label><input type="radio" class="basecontrol" name="baselayer" id=' + Object.keys(layers)[i] + ' value="' + Object.keys(layers)[i] +'"'+ (i==2?' checked':'')   +' >' + tlayer.title + '</label></div>').appendTo("#baselayerlist");
-      //console.log(layers[Object.keys(layers)[i]].title);
-      map.addLayer(tlayer.layer);           
-    }else if(tlayer.type == 'overlay') {
-      $('<div class="checkbox"><label><input type="checkbox" class="overlaycontrol" name="overlayer" value="' + Object.keys(layers)[i] + '">' + tlayer.title + '</label></div>').appendTo("#overlayerlist");
-      map.addLayer(tlayer.layer);
-      tlayer.layer.setZIndex(10000-i);
-      tlayer.layer.setStyle(styleFunction(Object.keys(layers)[i]));
+    // console.log(i);
+    // console.log(layers[Object.keys(layers)[i]]);
+    map.addLayer(tlayer.layer);
+    if(tlayer.type == 'overlay' && i!= 1){
+        $('<div class="checkbox"><label><input type="checkbox" class="overlaycontrol" name="overlayer" value="' + Object.keys(layers)[i] + '">' + tlayer.title + '</label></div>').appendTo("#overlayerlist");
+        tlayer.layer.setStyle(styleFunction(Object.keys(layers)[i]));
     }
+    // var tlayer = layers[Object.keys(layers)[i]];
+    // if (tlayer.type == 'base') {
+    //   $('<div class="radio"><label><input type="radio" class="basecontrol" name="baselayer" id=' + Object.keys(layers)[i] + ' value="' + Object.keys(layers)[i] +'"'+ (i==2?' checked':'')   +' >' + tlayer.title + '</label></div>').appendTo("#baselayerlist");
+    //   //console.log(layers[Object.keys(layers)[i]].title);
+    //   map.addLayer(tlayer.layer);           
+    // }else if(tlayer.type == 'overlay') {
+    //   $('<div class="checkbox"><label><input type="checkbox" class="overlaycontrol" name="overlayer" value="' + Object.keys(layers)[i] + '">' + tlayer.title + '</label></div>').appendTo("#overlayerlist");
+    //   map.addLayer(tlayer.layer);
+    //   tlayer.layer.setZIndex(10000-i);
+    //   tlayer.layer.setStyle(styleFunction(Object.keys(layers)[i]));
+    // }
   }
  
 }
@@ -339,18 +347,54 @@ var jTarget = typeof target === "string" ? $("#"+target) : $(target);
 
 
 var popup=undefined;
+var popup2=undefined;
 map.on('pointermove', function(evt) {  //triger singleclick, get evt,
   var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {  //get feature and layer by evt.pixel
+    // console.log(feature);
     return feature;
   });
+  if(typeof(popup2)!=undefined){
+    // $("#fName").html("點選水果按鈕，查看簡介");
+    map.removeOverlay(popup2);
+  }
 
   if (feature) {
-
     jTarget.css("cursor", cursorHoverStyle);
+    if(feature.get('COUNTYNAME')!=undefined){
+           // console.log(feature);
+    }
+    else if(feature.get('name')!=undefined){
+            // console.log(feature);
+
+        popup2 = new ol.Overlay({
+        element: $("<div />").addClass('info').append(
+          $("<h4 />").html(feature.get('name'))
+
+
+          )[0]
+      });
+      popup2.setPosition(evt.coordinate);
+      map.addOverlay(popup2);
+    }
+
+    
   } else {
     jTarget.css("cursor", "");
   }
 });
+
+// map.on('pointermove', function(evt) {  //triger singleclick, get evt,
+//   var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {  //get feature and layer by evt.pixel
+//     return feature;
+//   });
+
+//   if (feature) {
+
+//     jTarget.css("cursor", cursorHoverStyle);
+//   } else {
+//     jTarget.css("cursor", "");
+//   }
+// });
 
 map.on('singleclick', function(evt) {  //triger singleclick, get evt,
   var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {  //get feature and layer by evt.pixel
@@ -443,6 +487,58 @@ map.on('singleclick', function(evt) {  //triger singleclick, get evt,
 
 
 
+// var markers = [ 
+//   // $.ajax 
+// ]
+
+$.ajax({
+        url: 'php/fruitFarm.php',
+        type: 'POST',
+        // data: {"fName":fName, ""},
+        dataType:'text',
+        success: function(result) {
+          result = JSON.parse(result);
+          // $("#fName").html(fName);
+          // $("#fruitImg").attr("src",result['img_link']);
+          // $("#content").html(result['content']);
+          console.log(result);
+        },
+        error: function(){
+          console.log('ajax error');
+        }
+      }); 
+
+
+
+
+
+
+
+// for (var i = 0; i < Markers.length; i++) {
+//     var item = Markers[i];
+//     var longitude = item.lng;
+//     var latitude = item.lat;
+
+//     var iconFeature = new ol.Feature({
+//         geometry: new ol.geom.Point(ol.proj.transform([longitude, latitude], 'EPSG:4326', 'EPSG:3857'))
+//     });
+
+//     var iconStyle = new ol.style.Style({
+//         image: new ol.style.Icon(({
+//             anchor: [0.5, 1],
+//             src: "http://cdn.mapmarker.io/api/v1/pin?text=P&size=50&hoffset=1"
+//         }))
+//     });
+
+//     iconFeature.setStyle(iconStyle);
+//     features.push(iconFeature);
+
+// }
+
+
+
+
+
 
 
 
@@ -454,7 +550,10 @@ $(function() {
   //baseLayer control
   console.log(map.getView().calculateExtent(map.getSize()));
   setLayer('Google Maps');
-  layers["county"].layer.setVisible(true);
+  // layers["county"].layer.setVisible(true);
+   layers["county"].layer.setZIndex(10);
+  layers["charities"].layer.setZIndex(20);
+  layers["greengrocers"].layer.setZIndex(30);
 
 
 
@@ -488,20 +587,20 @@ $(function() {
   //     setLayer($(this).attr('value'));    
   // });
   
-  // //overlayLayer control
-  // $("input.overlaycontrol").change(function() {
-  //   if($(this).is(':checked')){
-  //     layers[$(this).val()].layer.setVisible(true);
+  //overlayLayer control
+  $("input.overlaycontrol").change(function() {
+    if($(this).is(':checked')){
+      layers[$(this).val()].layer.setVisible(true);
       
-  //     console.log($(this).val());
-  //     if($(this).val()=='bus'){
-  //       layers[$(this).val()].layer.setSource(loadJsonSourceWithAjax("./data/bike.php"));
-  //     }
-  //     //
-  //   }
-  //   else
-  //     layers[$(this).val()].layer.setVisible(false);
-  // });
+      console.log($(this).val());
+      if($(this).val()=='bus'){
+        layers[$(this).val()].layer.setSource(loadJsonSourceWithAjax("./data/bike.php"));
+      }
+      //
+    }
+    else
+      layers[$(this).val()].layer.setVisible(false);
+  });
 
 });
 
