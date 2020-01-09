@@ -1,6 +1,4 @@
 <?php
-
-require_once(__DIR__."/sqlconnect.php");
 require_once(__DIR__."/gump.class.php");
 
 class InputVeridator {

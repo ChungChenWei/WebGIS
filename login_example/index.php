@@ -1,5 +1,5 @@
 <?php
-  require_once(__DIR__."/funs.php");
+  require_once("php/funs.php");
 ?><!DOCTYPE html>
 <html lang="zh-TW">
   <head>

@@ -22,7 +22,8 @@
       </div>
       <div class='form-group'>
         <div class='col-md-offset-2 col-md-10'>
-          <p>Not a member? <a href='signup.php'>Sign Up Here</a></p>
+          <p>Not a member? <a href='php/login/signup.php'>Sign Up Here</a></p>
+          <p>Just want to try? <a href='index.php'>Guest</a></p>
           <?php
           if(isset($_POST['user'])){  //當有傳送帳號資訊時,且會執行至此處,則表示帳號密碼錯誤
             echo "<b class='text-danger'>帳號或密碼錯誤!</b>";

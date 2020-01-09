@@ -1,5 +1,5 @@
 <?php
-  require_once(__DIR__."/funs.php");
+  require_once(__DIR__."/../funs.php");
   ?>
   <div class="container">
     <div style='margin-top:90px'>

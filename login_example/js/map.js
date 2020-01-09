@@ -369,6 +369,7 @@ map.on('singleclick', function(evt) {  //triger singleclick, get evt,
      $("#fName").html("找到綠色的水果按鈕並點擊 (ex:<div class='btn btn-success btn-xs'>木瓜</div> )，就可以看到該水果的介紹喔！");
      $("#fruitImg").attr("src","");
      $("#content").html("");
+     $("#accordion").accordion("option", "active", 0);
     map.removeOverlay(popup);
   }
   if (feature){
@@ -428,6 +429,7 @@ map.on('singleclick', function(evt) {  //triger singleclick, get evt,
           $("#content").html(result['content']);
           monthlyprice(result["fName"])
           yearlyprice(result['fName'])
+          $("#accordion").accordion("option", "active", 1);
         },
         error: function(){
           console.log('ajax error');

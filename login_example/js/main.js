@@ -8,6 +8,15 @@ $(function() {
       $("#sidebar").hide();
       updateSize();
   });
+  $('#abouttaiwanfruit').click(function(){
+    $('#about_taiwan_food_dialog').modal('show');
+  });
+  $('#fruitclass').click(function(){
+    $('#furit_class_dialog').modal('show');
+  });
+  $('#fruitdetective').click(function(){
+    $('#furit_detective_dialog').modal('show');
+  });
   $(window).resize(function() {
       updateSize();
   });  

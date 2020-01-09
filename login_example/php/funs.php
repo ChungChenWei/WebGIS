@@ -8,7 +8,7 @@ require_once(__DIR__."/sqlconnect.php");
 function isAuthenticated(){
   if(isset($_GET['signout'])){  //當觸發登出時
     unset($_SESSION['authenticated']);  //解除session:authenticated
-    include(__DIR__."/signout.php");
+    include(__DIR__."/login/signout.php");
     return 3;
   }else if(isset($_GET['signin'])){
     return 2;

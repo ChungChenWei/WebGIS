@@ -1,5 +1,5 @@
 <?php
-  require_once(__DIR__."/header.php");
+  require_once(__DIR__."/../../header.php");
   require_once(__DIR__."/UserVeridator.php");
   require_once(__DIR__."/InputVeridator.php");
   require_once(__DIR__."/sqlconnect.php");
@@ -77,14 +77,14 @@
                 $prepare->bindValue(':activecode',$activasion);
                 $prepare->execute();
               }
-              header('Location: ./index.php');
+              header('Location: ../../index.php?signin');
             } 
           }
         }
         ?>
         <div class='form-group'>
           <div class='col-md-offset-2 col-md-10'>
-            <p>Already member? <a href='index.php'>Log In Here</a></p>
+            <p>Already member? <a href='../../index.php?signin'>Log In Here</a></p>
           </div>
         </div>
       </form>
