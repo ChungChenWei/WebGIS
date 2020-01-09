@@ -303,7 +303,7 @@ var styles = {
     //   src:'/fruitstand.png'
     // })]
 };
-file:///home/mjw/NTU/WebGIS/finalproject/fruitstand.png
+//file:///home/mjw/NTU/WebGIS/finalproject/fruitstand.png
 function initLayers() {
   //console.log("layers:",layers[Object.keys(layers)[0]].layer);
   //console.log("layers:",Object.keys(layers)[0].layer);
