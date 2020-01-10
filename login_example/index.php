@@ -32,7 +32,6 @@
             break;
           //case 1:
           case 2:
-          case 4:
             include(__DIR__."/authenticate.php");
             break;
         }

@@ -2,6 +2,10 @@ $(function() {
   $("#nav_layerlist").click(function() {
       $("#sidebar").toggle();
       $("#accordion").accordion("option", { active: 0 });
+
+      var config={active: 0, disabled: [1,2]};
+      $("#tab-demo").tabs(config);
+
       updateSize();
   });
   $("#btn-hide").click(function() {

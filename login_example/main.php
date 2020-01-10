@@ -28,9 +28,9 @@
       <a class="navbar-brand" href="" data-toggle="tab" style="font-size:20px;color:#030D68;">果來一點好嗎🍓<p style="font-size:10px;display: inline;">臺灣水果地圖</p></a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav nav-tabs">
+    <!--   <ul class="nav navbar-nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#layerlist" id="nav_layerlist" style="color:black;background-color:transparent ;font-size:17px;font-weight:bold">圖層列表📂</a></li>
-      </ul>
+      </ul> -->
       <ul class="nav navbar-nav navbar-right">
         <li><a id="membership" href="?member" style="font-weight:bold"><span class="glyphicon glyphicon-user"></span>會員資料</a></li>
         <li><a id="<?echo $log_id ?>" href="<?echo $log_sig ?>" style="font-weight:bold"><span class="glyphicon <?echo $log_ico ?>">
@@ -47,28 +47,39 @@
 </nav>
 
 
-<div id="container" style='height: 100%;'>
-  <div id="sidebar"> <!-- style="display:none" -->
-     <div id="accordion">
 
-            <h3>Intro<button type="button" id="btn-hide" class="btn btn-xs btn-default pull-right" id="sidebar-hide-btn"><i class="fa fa-chevron-left"></i></button></h3>
-            <div id="acc_layerlist1">
-              <div style="margin-top:20px;">「果來一點好嗎！」是一個結合地圖跟臺灣水果相關資訊的網站。</div>
-              <div><button id="abouttaiwanfruit" style="font-size:17px;font-weight:bold;color:#2c5364">關於臺灣水果😄</button></div>
-        <div><button id="fruitclass" style="font-size:17px;font-weight:bold">水果小學堂🎓</button></div>
-        <div><button id="fruitdetective" style="font-size:17px;font-weight:bold">水果偵探🔎</button></div>
+
+
+
+<div id="container" style='height: 100%;'>
+
+
+
+<!--   <div id="sidebar">
+      <div id="accordion">
+
+          <h3>Intro<button type="button" id="btn-hide" class="btn btn-xs btn-default pull-right" id="sidebar-hide-btn"><i class="fa fa-chevron-left"></i></button></h3>
+          <div id="acc_layerlist1">
+            <div style="margin-top:20px;">「果來一點好嗎！」是一個結合地圖跟臺灣水果相關資訊的網站。</div>
+            <hr/ style="border-top: 1px solid gray;">
+                    
+              <div>
+                <button id="abouttaiwanfruit" class=" btn btn-info btn-xs" style="font-weight:bold;padding:10px;margin:5px;">關於臺灣水果😄</button>
+                <button id="fruitclass" class=" btn btn-info btn-xs" style="font-weight:bold;padding:10px;margin:5px;">水果小學堂🎓</button>
+                <button id="fruitdetective" class=" btn btn-info btn-xs" style="font-weight:bold;padding:10px;margin:5px;">水果偵探🔎</button>
+              </div>
+
             </div>
-      
+            
             <h3>水果介紹</h3>
             <div id="acc_layerlist">
               <div id='fName' style="margin:20px 0px 10px 0px;">找到綠色的水果按鈕並點擊 (ex:<div class='btn btn-success btn-xs'>木瓜</div> )，就可以看到該水果的介紹喔！</div>
               <hr/>
               <div id="fImg">
-                  <img id="fruitImg" style="width:100%">
+                <img id="fruitImg" style="width:100%">
               </div>
               <hr/>
               <div id="content"></div>
-              <!-- <hr/> -->
               <h3 id="1yr"></h3>
               <div id="monthly"></div>
               <h3 id="5yr"></h3>
@@ -77,23 +88,49 @@
 
             <h3>圖層列表</h3>
             <div id="acc_layerlist3">
-              <!-- <h4 id="baselayerlist">基本底圖</h4> -->
               <h4 id="overlayerlist">套疊圖層</h4>
             </div>
-            
-            <!-- <h3>繪圖</h3>
-            <div id="draw_data">
-              <button class='btn btn-info btn-draw' id='btn-line' drawType='Point'>Point</button>
-              <button class='btn btn-info btn-draw' id='btn-line' drawType='LineString'>LineString</button>
-              <button class='btn btn-info btn-draw' id='btn-line' drawType='Polygon'>Polygon</button>
-              <br />
-              <button class='btn btn-warning' id='btn-edit'>Edit</button><br />
-              <a href='javascript:void(0);' class='btn btn-info' id='btn-json'>Download GeoJSON</a>
-            </div> -->
+      </div>
+  </div> -->
+  <div id="map">
 
-    </div>
+      <div id="tab-demo" style="z-index: 100;position:absolute; left:50px; top:30px;">
+        <ul class="tab-title">
+          <li><a href="#tab01">導言</a></li>
+          <li><a href="#tab02">水果列表</a></li>
+          <li><a href="#tab03">套疊圖層</a></li>
+        </ul>
+        <div id="tab01" class="tab-inner">
+          <div style="margin-top:20px;">「果來一點好嗎！」是一個結合地圖跟臺灣水果相關資訊的網站。</div>
+            <hr/ style="border-top: 1px solid gray;">
+                    
+              <div>
+                <button id="abouttaiwanfruit" class=" btn btn-info btn-xs" style="font-weight:bold;padding:10px;margin:5px;">關於臺灣水果😄</button>
+                <button id="fruitclass" class=" btn btn-info btn-xs" style="font-weight:bold;padding:10px;margin:5px;">水果小學堂🎓</button>
+                <button id="fruitdetective" class=" btn btn-info btn-xs" style="font-weight:bold;padding:10px;margin:5px;">水果偵探🔎</button>
+              </div>
+        </div>
+        <div id="tab02" class="tab-inner">
+          <div id='fName' style="margin:20px 0px 10px 0px;">找到綠色的水果按鈕並點擊 (ex:<div class='btn btn-success btn-xs'>木瓜</div> )，就可以看到該水果的介紹喔！</div>
+              <hr/>
+              <div id="fImg">
+                <img id="fruitImg" style="width:100%">
+              </div>
+              <hr/>
+              <div id="content"></div>
+              <h3 id="1yr"></h3>
+              <div id="monthly"></div>
+              <h3 id="5yr"></h3>
+              <div id="overtime"></div>
+        </div>
+        <div id="tab03" class="tab-inner">
+          <h4 id="overlayerlist">套疊圖層</h4>
+        </div>
+      </div>
+
+
   </div>
-  <div id="map"></div>
+  
 </div>
 
 

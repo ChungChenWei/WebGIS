@@ -325,6 +325,7 @@ var styles = {
 var lat = [];
 var lng = [];
 var description = [];
+var name2 = [];
 $.ajax({
         url: 'php/fruitFarm.php',
         type: 'POST',
@@ -342,7 +343,15 @@ $.ajax({
           for(i=0; i<result.length; i++){
               lat.push(Number(result[i]["lat"]));
               lng.push(Number(result[i]["lng"]));
-              description.push(result[i]["農場名稱"]);
+              name2.push("<b>"+result[i]["農場名稱"]+"</b></br>");
+              description.push("<h5><b>"+
+                               result[i]["種植水果"]+"</br>"+
+                               result[i]["盛產期"]+"</br></b></h5></hr>"+
+                               "<h6>"+
+                               result[i]["地址"]+"</br>"+                                     
+                               result[i]["連絡電話"]+"</br>"+
+                               result[i]["農場網址"]+"</br>"+
+                               "</h6>");
           }
           // console.log(lat);
         },
@@ -352,12 +361,7 @@ $.ajax({
       }); 
 
 
-console.log(lat);
-
-
-
-
-
+// console.log(name2[0]);
 
 var features = [];
 for (var i = 0; i < lng.length; i++) {
@@ -370,12 +374,13 @@ for (var i = 0; i < lng.length; i++) {
 
     var iconFeature = new ol.Feature({
         geometry: new ol.geom.Point(ol.proj.transform([lng[i], lat[i]], 'EPSG:4326', 'EPSG:3857')),
-        name : description[i]
+        name : name2[i],
+        description: description[i]
         // geometry: new ol.geom.Point(lng[i],lat[i])
 
     });
 
-    console.log(iconFeature);
+    // console.log(iconFeature);
 
     var iconStyle = new ol.style.Style({
         image: new ol.style.Icon(({
@@ -401,7 +406,7 @@ var vectorLayer = new ol.layer.Vector({
     visible: false,
     source: vectorSource
 });
-vectorLayer.setZIndex(20);
+vectorLayer.setZIndex(40);
 
 layers['fruitFarm'] = {'title': '觀光水果農場', 'type': 'overlay', 'layer':vectorLayer}
 // layers.apeend(vectorLayer);
@@ -422,6 +427,10 @@ function initLayers() {
     // console.log(i);
     // console.log(layers[Object.keys(layers)[i]]);
     map.addLayer(tlayer.layer);
+    if(i== 1){
+        $('<div class="checkbox"><label><input type="checkbox" checked class="overlaycontrol" name="overlayer" value="' + Object.keys(layers)[i] + '">' + tlayer.title + '</label></div>').appendTo("#overlayerlist");
+
+    }
     if(tlayer.type == 'overlay' && i!= 1){
         $('<div class="checkbox"><label><input type="checkbox" class="overlaycontrol" name="overlayer" value="' + Object.keys(layers)[i] + '">' + tlayer.title + '</label></div>').appendTo("#overlayerlist");
         tlayer.layer.setStyle(styleFunction(Object.keys(layers)[i]));
@@ -460,34 +469,26 @@ var popup=undefined;
 var popup2=undefined;
 map.on('pointermove', function(evt) {  //triger singleclick, get evt,
   var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {  //get feature and layer by evt.pixel
-    // console.log(feature);
     return feature;
   });
   if(typeof(popup2)!=undefined){
-    // $("#fName").html("點選水果按鈕，查看簡介");
     map.removeOverlay(popup2);
   }
 
   if (feature) {
     jTarget.css("cursor", cursorHoverStyle);
     if(feature.get('COUNTYNAME')!=undefined){
-           // console.log(feature);
     }
     else if(feature.get('name')!=undefined){
-            // console.log(feature);
-
         popup2 = new ol.Overlay({
         element: $("<div />").addClass('info').append(
-          $("<h4 />").html(feature.get('name'))
-
-
+          $("<h4 />").html("<b>"+feature.get('name')+"</b><h6>"+feature.get('description')+"</h6>")
           )[0]
       });
       popup2.setPosition(evt.coordinate);
+      // console.log(popup2);
       map.addOverlay(popup2);
-    }
-
-    
+    }    
   } else {
     jTarget.css("cursor", "");
   }
@@ -580,8 +581,8 @@ map.on('singleclick', function(evt) {  //triger singleclick, get evt,
           result = JSON.parse(result);
           $("#fName").html("<h3>"+result['fName']+"</h3>");
           $("#fruitImg").attr("src",result['img_link']);
-          $("#content").html(result['content']);
-          $("#1yr").html("每月平均水果價格");
+          $("#content").html(result['content']+"</hr>");
+          $("#1yr").html("過去1年價格走勢");
           $("#5yr").html("過去5年價格走勢");
           monthlyprice(result["fName"])
           yearlyprice(result['fName'])
@@ -613,12 +614,22 @@ map.on('singleclick', function(evt) {  //triger singleclick, get evt,
 
 
 $(function() {
+
+    var $li = $('ul.tab-title li');
+        $($li. eq(0) .addClass('active').find('a').attr('href')).siblings('.tab-inner').hide();
+    
+        $li.click(function(e){
+            e.preventDefault();
+            $($(this).find('a'). attr ('href')).show().siblings ('.tab-inner').hide();
+            $(this).addClass('active'). siblings ('.active').removeClass('active');
+        });
+
   //baseLayer control
   console.log(map.getView().calculateExtent(map.getSize()));
   setLayer('Google Maps');
   // layers["county"].layer.setVisible(true);
 
-  console.log(typeof(layers['county']));
+  // console.log(typeof(layers['county']));
    layers["county"].layer.setZIndex(10);
   layers["charities"].layer.setZIndex(20);
   layers["greengrocers"].layer.setZIndex(30);
